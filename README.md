@@ -1,6 +1,6 @@
 # CSE Resources (In-Progress)
 
-Welcome to the Computer Science Resources Repository! This repository aims to provide a curated collection of resources covering various fields within computer science. Whether you're interested in web development, software development, data structures and algorithms, machine learning, or Arduino hardware, you'll find valuable resources here.
+Welcome to the Computer Science Resources Repository! This repository aims to provide a curated collection of resources covering various fields within computer science. Whether you're interested in web development, software development, data structures and algorithms, machine learning etc you'll find valuable resources here.
 
 ## Table of Contents
 
@@ -46,11 +46,6 @@ Welcome to the Computer Science Resources Repository! This repository aims to pr
 
 ---
 
-## Arduino Hardware
-
-
-
----
 
 ## Other Fields
 
