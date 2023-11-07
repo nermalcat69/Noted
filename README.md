@@ -1,5 +1,6 @@
+# Astro With Tailwind Starter
+<div align="center">
 
+![cover-image](header.png)
 
-## Credit
-
-Using Astro Design System template made by **[@jordienr](https://github.com/jordienr)**
+</div>
