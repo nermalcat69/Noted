@@ -1,4 +1,4 @@
-# Resources
+# Resources by Nermal
 <div align="center">
 
 
