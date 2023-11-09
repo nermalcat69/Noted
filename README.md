@@ -1,4 +1,4 @@
-# Astro With Tailwind Starter
+# Resources
 <div align="center">
 
 
