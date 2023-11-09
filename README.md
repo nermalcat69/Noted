@@ -1,4 +1,4 @@
-# Astro With Tailwind Starter
+# Resources by Nermal
 <div align="center">
 
 
