@@ -1,0 +1,22 @@
+.Ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 1em;
+  margin-top: -0.5em;
+
+  /* nested lists are the worse */
+  text-indent: 0;
+
+  &.contains-task-list {
+    list-style-type: none;
+    padding-left: 0;
+
+    & > li > input[type="checkbox"] {
+      transform: translateY(1px);
+    }
+  }
+
+  & .Ul {
+    margin-top: 0;
+  }
+}

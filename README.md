@@ -1,50 +1,97 @@
-# Blogster
+# zaduma
 
-Theme: **newspaper**
+_an [Astro] starter template for understated personal websites_
 
-Blogster is a collection of beautiful, accessible and performant blog templates built with [Astro](https://astro.build) and [Markdoc](https://markdoc.dev).
+**Built with:**
 
-Check out the demo here - [Blogster newspaper template](https://blogster-newspaper.netlify.app).
+- [SolidJS]
+- [MDX], [Remark] and [Unified]
+- [Shiki Twoslash][shiki-twoslash]
+- [Tailwind CSS][tailwind-css]
+- Vercel and [Vercel OG][vercel-og]
+- [GitHub Actions][github-actions]
 
-## Newspaper Template
+[astro]: https://astro.build/
+[solidjs]: https://www.solidjs.com/
+[mdx]: https://mdxjs.com/
+[remark]: https://github.com/remarkjs/remark
+[unified]: https://unifiedjs.com/
+[shiki-twoslash]: https://github.com/shikijs/twoslash
+[tailwind-css]: https://tailwindcss.com/
+[vercel-og]:
+  https://vercel.com/blog/introducing-vercel-og-image-generation-fast-dynamic-social-card-images
+[github-actions]: https://github.com/features/actions
 
-A beautiful, performant and accessible theme built with [Tailwind](https://tailwindcss.com).
+## 🏎️ Usage TLDR
 
-- **Fast**. Fast by default. Astro websites are engineered to be fast and load before you could blink, even when not cached.
-- **Dark mode**. All themes have light/dark mode built-in.
-- **Mobile first**. Responsive and loads fast in all devices.
-- **Accessible**. A well thought out semantic and accessible content.
-- **Perfect lighthouse score.** 100 across the board.
-- **Easy content authoring**. Author content using markdown (`.md`) from your code editor or directly in GitHub.
-- **Extended markdown with [Markdoc](https://markdoc.dev).** Type-safe custom components like YouTube embed, Twitter embed (or anything you want really) in your markdown (`.md`) files.
-- **RSS feed**. Your blog has an RSS feed setup that can be accessed at `/rss.xml`.
-- **SEO**. All pages are setup with all the SEO you might need.
+1. Click <kbd>Use this template</kbd> to create a new repo.
+2. Set [`VERCEL_TOKEN`], `VERCEL_PROJECT_ID`, and [`VERCEL_ORG_ID`] secrets to
+   deploy to Vercel from GHA (enables access to git history).
+3. Add `OG_IMAGE_SECRET` to secure your OG image endpoint.
 
-## How do I add content?
+_[See full usage instructions.](#-usage)_
 
-All the content is written in markdown (.md) and grouped as `blog` or `projects` in the `content` directory. All the default markdown syntax will work. You also have a few example custom markdown elements like _YouTube embed_, _Twitter embed_, etc. You can create your own custom components too in two easy steps.
+## 🏛 Project Structure
 
-1. Add a markdoc config. Check out the markdoc config in [src/lib/markdoc/config.ts](src/lib/markdoc/config.ts) to learn how to add custom components.
-2. Add a component to render your custom component. Check out the Renderer in [src/components/Renderer.astro](src/components/Renderer.astro).
+Inside of your Astro project, you'll see the following folders and files:
 
-## How do I make it my blog?
+<pre>
+<code>
+├── posts/
+│   └── rebuilding-a-blog.mdx — <i>posts written in <a href="https://mdxjs.com/">MDX</a></i>
+├── public/ — <i>static assets apart from images</i>
+├── src/
+│   ├── build-time/* — <i>remark plugins</i>
+│   ├── global-styles/* — <i>fonts, body and prose styles</i>
+│   ├── layouts/
+│   │   ├── BaseLayout.astro — <i>UI shared between all pages</i>
+│   │   └── PostLayout.astro — <i>layout for all posts</i>
+│   ├── lib/* — <i>reusable utils and UI components</i>
+│   ├── images/* — <i>pictures (need to be here to be optimized by Astro Image)</i>
+│   ├── pages/
+│   │   ├── [path].astro — <i>Astro dynamic route for posts, supplies MDX components</i>
+│   │   └── index.astro — <i>index page, lists all posts</i>
+│   ├── env.d.ts
+│   └── types.ts
+├── astro.config.ts
+├── package.json
+├── postcss.config.cjs
+├── tailwind.config.cjs — <i>Tailwind config, colors, fonts</i>
+└── tsconfig.json
+</code>
+</pre>
 
-Easy.
+## 🧞 Commands
 
-- All content is static and everything is straight forward. Change whatever you need to change.
-- Delete or update the content in `content/{content-group}`. `content-group` could be `blog`, `projects` or `anything`.
-- (Optional) If you need more content types like _Notes_, just create a new dir in `content` and add a new frontmatter validator like [src/lib/markdoc/blog/frontmatter](src/lib/markdoc/blog/frontmatter).
+All commands are run from the root of the project, from a terminal:
 
-## How do I deploy?
+| Command                 | Action                                           |
+| :---------------------- | :----------------------------------------------- |
+| `pnpm install`          | Installs dependencies                            |
+| `pnpm run dev`          | Starts local dev server at `localhost:3000`      |
+| `pnpm run build`        | Build your production site to `./dist/`          |
+| `pnpm run preview`      | Preview your build locally, before deploying     |
+| `pnpm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
+| `pnpm run astro --help` | Get help using the Astro CLI                     |
 
-`yarn build` will generate a static website in `dist` dir. You can host it with any static hosting. If you need a recommendation, check out [Netlify](netlify.com).
+## 👌 Usage
 
-## Credit
+1. Click <kbd>Use this template</kbd> to create a new repo.
+2. Clone the repository, install with `pnpm install` and run with `pnpm dev`.
+3. Style it and personalize however you like 💅
+4. Set [`VERCEL_TOKEN`], `VERCEL_PROJECT_ID`, and [`VERCEL_ORG_ID`] secrets to
+   deploy to Vercel from GHA (what enables access to git history).
+   ([_Settings→Secrets_](https://github.com/hasparus/zaduma/settings/secrets/actions))
 
-Thanks to other templates that inspired this theme.
+   - Alternatively — if all your blog posts have a `date` in frontmatter, you
+     don't need to deploy through _workflows/ci.yml_. Feel free to remove the
+     deploy steps from the YML file and connect Vercel/Netlify integration. Go
+     to `derivedTitleAndDatePlugin` function and remove `execSync("git log")`
+     from it. (TODO: Can we make it more convenient?)
 
-- [Official Astro Blog template](https://github.com/withastro/astro/tree/main/examples/blog)
+5. Generate a passphrase for `OG_IMAGE_SECRET` to secure your OG image endpoint,
+   and add it to
+   [Actions Secrets](<(https://github.com/hasparus/zaduma/settings/secrets/actions)>).
 
-## License
-
-MIT © [Dinesh Pandiyan](https://github.com/flexdinesh)
+[`vercel_token`]: https://vercel.com/account/tokens
+[`vercel_org_id`]: https://vercel.com/account#your-id
