@@ -1,8 +1,10 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "display": "theme/newspaper",
+  "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
-    "types": ["astro/client"],
-    "baseUrl": "."
-  }
+    "lib": ["DOM"],
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "skipLibCheck": true
+  },
+  "include": ["src", "api", "*.ts"]
 }

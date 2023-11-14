@@ -1,114 +1,80 @@
+// @ts-check
+
+const tailwindColors = require("tailwindcss/colors");
+const plugin = require("tailwindcss/plugin");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.astro"],
   darkMode: "class",
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
+  content: ["./src/**/*.{astro,ts,tsx,css}"],
   theme: {
+    fontFamily: {
+      sans: [
+        "Inter",
+        "ui-sans-serif",
+        "system-ui",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+        '"Noto Color Emoji"',
+      ],
+      serif: [
+        '"Brygada 1918"',
+        "ui-serif",
+        "Georgia",
+        "Cambria",
+        '"Times New Roman"',
+        "serif",
+      ],
+      mono: [
+        "Fira Code",
+        "ui-monospace",
+        "SFMono-Regular",
+        "Menlo",
+        "Monaco",
+        "Consolas",
+        '"Liberation Mono"',
+        "monospace",
+      ],
+    },
+    colors: {
+      inherit: tailwindColors.inherit,
+      current: tailwindColors.current,
+      transparent: tailwindColors.transparent,
+      black: tailwindColors.black,
+      white: tailwindColors.white,
+
+      gray: tailwindColors.neutral,
+    },
     extend: {
-      fontFamily: {
-        body: ["Roboto Mono", "sans-serif"],
-        heading: ["Roboto Mono", "sans-serif"],
+      maxWidth: {
+        container: "43rem",
       },
-      colors: {
-        transparent: "transparent",
-        current: "currentColor",
-        primary: {
-          main: "rgb(var(--color-primary-main) / <alpha-value>)",
-        },
-        text: {
-          body: "rgb(var(--color-text-body) / <alpha-value>)",
-          bold: "rgb(var(--color-text-bold) / <alpha-value>)",
-          heading: "rgb(var(--color-text-heading) / <alpha-value>)",
-          muted: "rgb(var(--color-text-muted) / <alpha-value>)",
-          code: "rgb(var(--color-text-code) / <alpha-value>)",
-          link: "rgb(var(--color-text-link) / <alpha-value>)",
-          selection: "rgb(var(--color-text-selection) / <alpha-value>)",
-        },
-        bg: {
-          body: "rgb(var(--color-bg-body) / <alpha-value>)",
-          code: "rgb(var(--color-bg-code) / <alpha-value>)",
-          selection: "rgb(var(--color-bg-selection) / <alpha-value>)",
-        },
-        border: {
-          code: "rgb(var(--color-border-code) / <alpha-value>)",
+      animation: {
+        "scale-up": "scale-up 150ms ease-in",
+      },
+      keyframes: {
+        "scale-up": {
+          "0%": { transform: "scale(0.9)", opacity: 0 },
+          "70%": { transform: "scale(1.02)", opacity: 0.7 },
+          "100%": { transform: "scale(1)", opacity: 1 },
         },
       },
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            a: {
-              "text-decoration": "none",
-              "background-repeat": "no-repeat",
-              "background-size": "100% 1.5px",
-              "background-position": "0 100%",
-              "background-image":
-                "linear-gradient(to right, rgb(var(--color-text-link)/1), rgb(var(--color-text-link)/1))",
-              "&:hover": {
-                color: "rgb(var(--color-text-link))",
-              },
-            },
-            "h1, h2, h3, h4, h5": {
-              color: "rgb(var(--color-text-heading))",
-            },
-            "code::before": {
-              content: "none",
-            },
-            "code::after": {
-              content: "none",
-            },
-            blockquote: {
-              border: "none",
-              position: "relative",
-              width: "96%",
-              margin: "0 auto",
-              "font-size": "1.0625em",
-              "padding-top": "1.5rem",
-              "padding-bottom": "0.5rem",
-              "padding-left": "1.5rem",
-              "padding-right": "1.5rem",
-            },
-            "blockquote::before": {
-              "font-family": "Arial",
-              content: "'“'",
-              "font-size": "4em",
-              color: "rgb(var(--color-text-link))",
-              position: "absolute",
-              left: "-10px",
-              top: "-10px",
-            },
-            "blockquote::after": {
-              content: "",
-            },
-            "blockquote p:first-of-type::before": {
-              content: "",
-            },
-            "blockquote p:last-of-type::after": {
-              content: "",
-            },
-          },
-        },
-        newspaper: {
-          css: {
-            "--tw-prose-body": "rgb(var(--color-text-body))",
-            "--tw-prose-headings": "rgb(var(--color-text-heading))",
-            "--tw-prose-lead": "rgb(var(--color-text-body))",
-            "--tw-prose-links": "rgb(var(--color-text-body))",
-            "--tw-prose-bold": "rgb(var(--color-text-bold))",
-            "--tw-prose-counters": "rgb(var(--color-text-body))",
-            "--tw-prose-bullets": "rgb(var(--color-text-body))",
-            "--tw-prose-hr": "rgb(var(--color-text-muted))",
-            "--tw-prose-quotes": "rgb(var(--color-text-body))",
-            "--tw-prose-quote-borders": "rgb(var(--color-primary-main))",
-            "--tw-prose-captions": "rgb(var(--color-primary-heading))",
-            "--tw-prose-quote-captions": "rgb(var(--color-primary-heading))",
-            "--tw-prose-code": "rgb(var(--color-text-code))",
-            "--tw-prose-pre-code": "rgb(var(--color-text-code))",
-            "--tw-prose-pre-bg": "rgb(var(--color-bg-code))",
-            "--tw-prose-th-borders": "rgb(var(--color-text-muted))",
-            "--tw-prose-td-borders": "rgb(var(--color-text-muted))",
-          },
-        },
-      }),
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    plugin(({ addVariant }) => {
+      addVariant("selected", '&[aria-selected="true"]');
+      addVariant("current", '&[aria-current="true"]');
+    }),
+  ],
 };
