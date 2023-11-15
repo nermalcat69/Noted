@@ -1,78 +1,49 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { formatDate } from "../lib/formatDate";
-import { Link } from "../lib/Link";
-import { Paragraph } from "../lib/prose/Paragraph";
-import type { PostFrontmatter } from "../types";
+import BaseHead from '../components/Head/BaseHead.astro';
+import Nav from '../components/Nav.astro';
+import HomeHeader from '../components/HomeHeader.astro';
+import Card from '../components/Card.astro';
+import Footer from '../components/Footer/Footer.astro'
 
-let posts = await Astro.glob<PostFrontmatter>("../../posts/**/*.mdx");
-
-if (import.meta.env.PROD) {
-  posts = posts.filter((post) => !post.frontmatter.draft);
+interface MarkdownFrontmatter {
+  date: number;
 }
 
-posts.sort((a, b) => {
-  return (
-    new Date(b.frontmatter.date).getTime() -
-    new Date(a.frontmatter.date).getTime()
-  );
-});
+const title = 'Creek';
+const description = 'A Theme for Astro';
+const seoDescription = 'Creek is a theme for Astro static site generator';
+
+const allPosts = await Astro.glob<MarkdownFrontmatter>('./posts/*.md');
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf());
 ---
 
-<BaseLayout
-  title="zaduma"
-  description="Astro starter template for understated personal websites using Solid.js, Tailwind CSS, and MDX."
->
-  <h1 slot="header-content" class="text-gray-600 dark:text-gray-500">zaduma</h1>
-  <main class="py-10 zaduma-prose">
-    <Paragraph>
-      <small class="text-gray-600 dark:text-gray-500"
-        >IPA /zaˈdu.ma/ — reverie, musing</small
-      >
-      <br />
-       is an Astro starter template for understated personal websites
-    </Paragraph>
-    <Paragraph class="mt-6">
-      Learn about it by reading the articles below, take a look at the
-      <Link href="https://github.com/hasparus/zaduma">readme</Link>, or boldly
-      <Link href="https://github.com/hasparus/zaduma/generate">
-        {"create a new repository"}
-      </Link>. I wish you a pleasant journey.
-    </Paragraph>
-  </main>
-  <ul>
-    {
-      posts.map(({ frontmatter }) => {
-        const date = new Date(frontmatter.date);
+<html lang="en">
 
-        return (
-          <li>
-            <Link
-              href={frontmatter.path}
-              class="flex flex-row gap-2 justify-between"
-              noUnderline
-            >
-              <h2 class="text-gray-800 dark:text-gray-300 font-sans">
-                {frontmatter.title}
-              </h2>
-              <time
-                datetime={date.toISOString()}
-                class="text-gray-600 dark:text-gray-400 tabular-nums tracking-tighter shrink-0"
-              >
-                {formatDate(date)}
-              </time>
-            </Link>
-          </li>
-        );
-      })
-    }
-  </ul>
-  <style>
-    ul:hover li:not(:hover) :where(h2, time) {
-      @apply text-gray-600 transition-colors;
-      :global(.dark) & {
-        @apply text-gray-500;
-      }
-    }
-  </style>
-</BaseLayout>
+<head>
+  <BaseHead title={title} description={seoDescription} />
+</head>
+
+<body class="bg-white text-black font-body leading-normal personality-casual">
+  <Nav />
+
+  <main class="py-12 lg:py-20">
+    <article class="max-w-6xl mx-auto px-3">
+      <HomeHeader title={title} description={description} />
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8" data-test="articles-section">
+        {sortedPosts.map(p => <div class="col-span-1">
+          <Card post={p} />
+        </div>)}
+      </section>
+    </article>
+  </main>
+
+  <section class="flex space-x-8 justify-center text-xl pt-8 font-bold">
+    <a href="/posts" class="mr-8" data-test="see-all-link">
+      See All<span class="squiggle">&rarr;</span>
+    </a>
+  </section>
+
+  <Footer />
+</body>
+
+</html>
