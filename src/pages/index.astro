@@ -1,15 +1,78 @@
 ---
-import PageMeta from "../components/PageMeta.astro";
-import PageLayout from "../layouts/PageLayout.astro";
-import Intro from "../components/Intro.astro";
-import AboutTheTheme from "../components/AboutTheTheme.astro";
-import { SITE_TITLE } from "../config";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { formatDate } from "../lib/formatDate";
+import { Link } from "../lib/Link";
+import { Paragraph } from "../lib/prose/Paragraph";
+import type { PostFrontmatter } from "../types";
+
+let posts = await Astro.glob<PostFrontmatter>("../../posts/**/*.mdx");
+
+if (import.meta.env.PROD) {
+  posts = posts.filter((post) => !post.frontmatter.draft);
+}
+
+posts.sort((a, b) => {
+  return (
+    new Date(b.frontmatter.date).getTime() -
+    new Date(a.frontmatter.date).getTime()
+  );
+});
 ---
 
-<PageLayout>
-  <PageMeta title={`${SITE_TITLE} | Web Ninja`} slot="meta" />
-  <Fragment slot="main">
-    <Intro />
-    <AboutTheTheme />
-  </Fragment>
-</PageLayout>
+<BaseLayout
+  title="zaduma"
+  description="Astro starter template for understated personal websites using Solid.js, Tailwind CSS, and MDX."
+>
+  <h1 slot="header-content" class="text-gray-600 dark:text-gray-500">zaduma</h1>
+  <main class="py-10 zaduma-prose">
+    <Paragraph>
+      <small class="text-gray-600 dark:text-gray-500"
+        >IPA /zaˈdu.ma/ — reverie, musing</small
+      >
+      <br />
+       is an Astro starter template for understated personal websites
+    </Paragraph>
+    <Paragraph class="mt-6">
+      Learn about it by reading the articles below, take a look at the
+      <Link href="https://github.com/hasparus/zaduma">readme</Link>, or boldly
+      <Link href="https://github.com/hasparus/zaduma/generate">
+        {"create a new repository"}
+      </Link>. I wish you a pleasant journey.
+    </Paragraph>
+  </main>
+  <ul>
+    {
+      posts.map(({ frontmatter }) => {
+        const date = new Date(frontmatter.date);
+
+        return (
+          <li>
+            <Link
+              href={frontmatter.path}
+              class="flex flex-row gap-2 justify-between"
+              noUnderline
+            >
+              <h2 class="text-gray-800 dark:text-gray-300 font-sans">
+                {frontmatter.title}
+              </h2>
+              <time
+                datetime={date.toISOString()}
+                class="text-gray-600 dark:text-gray-400 tabular-nums tracking-tighter shrink-0"
+              >
+                {formatDate(date)}
+              </time>
+            </Link>
+          </li>
+        );
+      })
+    }
+  </ul>
+  <style>
+    ul:hover li:not(:hover) :where(h2, time) {
+      @apply text-gray-600 transition-colors;
+      :global(.dark) & {
+        @apply text-gray-500;
+      }
+    }
+  </style>
+</BaseLayout>

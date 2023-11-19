@@ -10,19 +10,13 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
-# environment variables
-.env
-.env.production
-
 # macOS-specific files
 .DS_Store
 
-# yarn
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+# hidden directories
+.vercel
+.astro
+
+# environment files
+.env.local
+.env.*.local
